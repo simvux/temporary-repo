@@ -141,13 +141,17 @@ func (data *lemgram_data) isValid() bool {
 		!selective(data.part_of_speech)
 }
 
+func (data *lemgram_data) print() {
+	fmt.Printf("%09.4f %v\n", data.relative_frequency, strings.ReplaceAll(data.lemgram, "_", " "))
+}
+
 func print_lemgram_slice(m map[string]lemgram_data, n uint) {
 	for _, value := range m {
 		if n == 0 {
 			break
 		}
 
-		fmt.Printf("%09.4f %v\n", value.relative_frequency, strings.ReplaceAll(value.lemgram, "_", " "))
+		value.print()
 
 		n--
 	}
