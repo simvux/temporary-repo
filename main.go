@@ -99,46 +99,23 @@ func alphabetic(s string) bool {
 	return true
 }
 
-func selective(a []string) bool {
-	for _, string := range a {
-		if strings.Contains(string, "ab.") {
-			return true
-		}
-		if strings.Contains(string, "abm.") {
-			return true
-		}
-		if strings.Contains(string, "al.") {
-			return true
-		}
-		if strings.Contains(string, "av.") {
-			return true
-		}
-		if strings.Contains(string, "avm.") {
-			return true
-		}
-		if strings.Contains(string, "nn.") {
-			return true
-		}
-		if strings.Contains(string, "nnm.") {
-			return true
-		}
-		if strings.Contains(string, "pn.") {
-			return true
-		}
-		if strings.Contains(string, "pp.") {
-			return true
-		}
-		if strings.Contains(string, "ppm.") {
-			return true
-		}
-		if strings.Contains(string, "vb.") {
-			return true
-		}
-		if strings.Contains(string, "vbm.") {
+func selective(input []string) bool {
+	allowed := []string{"ab.", "abm.", "al.", "av.", "avm.", "nn.", "nnm.", "pn.", "pp.", "ppm.", "vb.", "vbm."}
+
+	for _, s := range input {
+		if containsAny(s, allowed) {
 			return true
 		}
 	}
+	return false
+}
 
+func containsAny(s string, checks []string) bool {
+	for _, check := range checks {
+		if strings.Contains(s, check) {
+			return true
+		}
+	}
 	return false
 }
 
