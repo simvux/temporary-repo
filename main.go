@@ -66,7 +66,9 @@ func generate_lemgram_map() map[string]lemgram_data {
 
 			for _, key := range lemgram {
 				t := new(lemgram_data)
-				if !lemgram_map[key].compound_analysis && strings.Contains(column[3], "+") { t.compound_analysis = true }
+				if !lemgram_map[key].compound_analysis && strings.Contains(column[3], "+") {
+					t.compound_analysis = true
+				}
 				t.lemgram = key
 				t.part_of_speech = append(lemgram_map[key].part_of_speech, a...)
 				t.relative_frequency, _ = strconv.ParseFloat(column[5], 64)
@@ -89,7 +91,9 @@ func generate_lemgram_map() map[string]lemgram_data {
 
 func alphabetic(s string) bool {
 	for _, rune := range s {
-		if !strings.ContainsRune("abcdefghijklmnopqrstuvwxyzåäö_", rune) { return false }
+		if !strings.ContainsRune("abcdefghijklmnopqrstuvwxyzåäö_", rune) {
+			return false
+		}
 	}
 
 	return true
@@ -97,18 +101,42 @@ func alphabetic(s string) bool {
 
 func selective(a []string) bool {
 	for _, string := range a {
-		if strings.Contains(string, "ab.") { return true }
-		if strings.Contains(string, "abm.") { return true }
-		if strings.Contains(string, "al.") { return true }
-		if strings.Contains(string, "av.") { return true }
-		if strings.Contains(string, "avm.") { return true }
-		if strings.Contains(string, "nn.") { return true }
-		if strings.Contains(string, "nnm.") { return true }
-		if strings.Contains(string, "pn.") { return true }
-		if strings.Contains(string, "pp.") { return true }
-		if strings.Contains(string, "ppm.") { return true }
-		if strings.Contains(string, "vb.") { return true }
-		if strings.Contains(string, "vbm.") { return true }
+		if strings.Contains(string, "ab.") {
+			return true
+		}
+		if strings.Contains(string, "abm.") {
+			return true
+		}
+		if strings.Contains(string, "al.") {
+			return true
+		}
+		if strings.Contains(string, "av.") {
+			return true
+		}
+		if strings.Contains(string, "avm.") {
+			return true
+		}
+		if strings.Contains(string, "nn.") {
+			return true
+		}
+		if strings.Contains(string, "nnm.") {
+			return true
+		}
+		if strings.Contains(string, "pn.") {
+			return true
+		}
+		if strings.Contains(string, "pp.") {
+			return true
+		}
+		if strings.Contains(string, "ppm.") {
+			return true
+		}
+		if strings.Contains(string, "vb.") {
+			return true
+		}
+		if strings.Contains(string, "vbm.") {
+			return true
+		}
 	}
 
 	return false
@@ -118,11 +146,21 @@ func new_map(m map[string]lemgram_data) map[string]lemgram_data {
 	new_map := make(map[string]lemgram_data)
 
 	for key, value := range m {
-		if len([]rune(value.lemgram)) < 4 { continue }
-		if value.relative_frequency > 0061.0658 { continue }
-		if value.relative_frequency < 0000.0118 { continue }
-		if !alphabetic(value.lemgram) { continue }
-		if !selective(value.part_of_speech) { continue }
+		if len([]rune(value.lemgram)) < 4 {
+			continue
+		}
+		if value.relative_frequency > 0061.0658 {
+			continue
+		}
+		if value.relative_frequency < 0000.0118 {
+			continue
+		}
+		if !alphabetic(value.lemgram) {
+			continue
+		}
+		if !selective(value.part_of_speech) {
+			continue
+		}
 
 		new_map[key] = value
 	}
@@ -132,7 +170,9 @@ func new_map(m map[string]lemgram_data) map[string]lemgram_data {
 
 func print_lemgram_slice(m map[string]lemgram_data, n uint) {
 	for _, value := range m {
-		if n == 0 { break }
+		if n == 0 {
+			break
+		}
 
 		fmt.Printf("%09.4f %v\n", value.relative_frequency, strings.ReplaceAll(value.lemgram, "_", " "))
 
