@@ -123,19 +123,7 @@ func new_map(m map[string]lemgram_data) map[string]lemgram_data {
 	new_map := make(map[string]lemgram_data)
 
 	for key, value := range m {
-		if len([]rune(value.lemgram)) < 4 {
-			continue
-		}
-		if value.relative_frequency > 0061.0658 {
-			continue
-		}
-		if value.relative_frequency < 0000.0118 {
-			continue
-		}
-		if !alphabetic(value.lemgram) {
-			continue
-		}
-		if !selective(value.part_of_speech) {
+		if value.isValid() {
 			continue
 		}
 
@@ -143,6 +131,14 @@ func new_map(m map[string]lemgram_data) map[string]lemgram_data {
 	}
 
 	return new_map
+}
+
+func (data *lemgram_data) isValid() bool {
+	return len([]rune(data.lemgram)) < 4 ||
+		data.relative_frequency > 0061.0658 ||
+		data.relative_frequency < 0000.0118 ||
+		!alphabetic(data.lemgram) ||
+		!selective(data.part_of_speech)
 }
 
 func print_lemgram_slice(m map[string]lemgram_data, n uint) {
